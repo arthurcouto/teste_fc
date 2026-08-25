@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CashFlow.Contracts/CashFlow.Contracts.csproj" />
+  </Folder>
+  <Folder Name="/src/Consolidation/">
+    <Project Path="src/Consolidation/CashFlow.Consolidation.Api/CashFlow.Consolidation.Api.csproj" />
+    <Project Path="src/Consolidation/CashFlow.Consolidation.Application/CashFlow.Consolidation.Application.csproj" />
+    <Project Path="src/Consolidation/CashFlow.Consolidation.Infrastructure/CashFlow.Consolidation.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Ledger/">
+    <Project Path="src/Ledger/CashFlow.Ledger.Api/CashFlow.Ledger.Api.csproj" />
+    <Project Path="src/Ledger/CashFlow.Ledger.Application/CashFlow.Ledger.Application.csproj" />
+    <Project Path="src/Ledger/CashFlow.Ledger.Domain/CashFlow.Ledger.Domain.csproj" />
+    <Project Path="src/Ledger/CashFlow.Ledger.Infrastructure/CashFlow.Ledger.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CashFlow.ArchitectureTests/CashFlow.ArchitectureTests.csproj" />
+    <Project Path="tests/CashFlow.Consolidation.UnitTests/CashFlow.Consolidation.UnitTests.csproj" />
+    <Project Path="tests/CashFlow.IntegrationTests/CashFlow.IntegrationTests.csproj" />
+    <Project Path="tests/CashFlow.Ledger.UnitTests/CashFlow.Ledger.UnitTests.csproj" />
+  </Folder>
+</Solution>

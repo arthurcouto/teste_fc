@@ -1,0 +1,32 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: back/global.json
+
+      - name: Restaurar
+        run: dotnet restore
+        working-directory: back
+
+      - name: Construir
+        run: dotnet build -c Release --no-restore
+        working-directory: back
+
+      - name: Testar
+        run: dotnet test -c Release --no-build
+        working-directory: back
