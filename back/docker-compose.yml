@@ -1,0 +1,94 @@
+name: cashflow
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: cashflow
+      POSTGRES_PASSWORD: cashflow
+      POSTGRES_DB: cashflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./local/postgres:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cashflow"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  queue:
+    image: localstack/localstack:4
+    environment:
+      SERVICES: sqs
+      DEBUG: 0
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./local/localstack:/etc/localstack/init/ready.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "awslocal sqs list-queues | grep -q cashflow-entries"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  ledger-api:
+    build:
+      context: .
+      dockerfile: src/Ledger/CashFlow.Ledger.Api/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      Ledger__Engine: PostgreSql
+      Ledger__DatabaseHost: postgres
+      Ledger__DatabaseName: ledger
+      Ledger__DatabaseUser: cashflow
+      Ledger__DatabasePassword: cashflow
+      ASPNETCORE_ENVIRONMENT: Development
+      Authentication__Mode: Disabled
+      Ledger__QueueUrl: http://queue:4566/000000000000/cashflow-entries
+      Ledger__QueueServiceUrl: http://queue:4566
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+      AWS_REGION: us-east-1
+    ports:
+      - "8081:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      queue:
+        condition: service_healthy
+
+  consolidation-api:
+    build:
+      context: .
+      dockerfile: src/Consolidation/CashFlow.Consolidation.Api/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      Consolidation__Engine: PostgreSql
+      Consolidation__DatabaseHost: postgres
+      Consolidation__DatabaseName: consolidation
+      Consolidation__DatabaseUser: cashflow
+      Consolidation__DatabasePassword: cashflow
+      ASPNETCORE_ENVIRONMENT: Development
+      Authentication__Mode: Disabled
+      Consolidation__QueueUrl: http://queue:4566/000000000000/cashflow-entries
+      Consolidation__QueueServiceUrl: http://queue:4566
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+      AWS_REGION: us-east-1
+    ports:
+      - "8082:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      queue:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ../front
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ledger-api
+      - consolidation-api
