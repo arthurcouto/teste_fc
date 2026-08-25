@@ -1,0 +1,54 @@
+:root { color-scheme: light dark; --line: color-mix(in srgb, currentColor 20%, transparent); }
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0 auto;
+  padding: 1.5rem;
+  max-width: 60rem;
+  line-height: 1.5;
+}
+
+h1 { font-size: 1.4rem; }
+h2 { font-size: 1.1rem; margin-top: 2rem; }
+
+nav { display: flex; gap: .5rem; margin-bottom: 1rem; }
+
+nav button {
+  padding: .5rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: .4rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+nav button.active { border-color: currentColor; font-weight: 600; }
+
+form { display: flex; flex-wrap: wrap; gap: .75rem; align-items: end; }
+
+label { display: flex; flex-direction: column; gap: .25rem; font-size: .85rem; }
+
+input, select {
+  padding: .4rem;
+  border: 1px solid var(--line);
+  border-radius: .3rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+form button[type="submit"] {
+  padding: .45rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: .3rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.feedback { min-height: 1.5rem; font-size: .9rem; }
+.feedback.failed { color: #c0392b; font-weight: 600; }
+
+table { width: 100%; border-collapse: collapse; margin-top: .5rem; }
+th, td { text-align: left; padding: .4rem .5rem; border-bottom: 1px solid var(--line); font-size: .9rem; }
+form button[type="submit"]:disabled { opacity: .55; cursor: not-allowed; }

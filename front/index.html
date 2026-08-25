@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Controle de fluxo de caixa</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>Controle de fluxo de caixa</h1>
+  <nav role="tablist">
+    <button type="button" role="tab" id="tab-entries" aria-controls="entries" aria-selected="true" data-screen="entries" class="active">Lançamentos</button>
+    <button type="button" role="tab" id="tab-balance" aria-controls="balance" aria-selected="false" data-screen="balance">Saldo diário</button>
+  </nav>
+</header>
+
+<main>
+  <section id="entries" role="tabpanel" aria-labelledby="tab-entries">
+    <h2>Registrar lançamento</h2>
+    <form id="record">
+      <label>Tipo
+        <select name="type" required>
+          <option value="credit">Crédito</option>
+          <option value="debit">Débito</option>
+        </select>
+      </label>
+      <label>Valor
+        <input name="amount" type="number" step="0.01" min="0.01" required>
+      </label>
+      <label>Data de competência
+        <input name="competenceDate" type="date" required>
+      </label>
+      <label>Descrição
+        <input name="description" type="text" maxlength="200">
+      </label>
+      <button type="submit">Registrar</button>
+    </form>
+    <p class="feedback" id="record-feedback" role="status"></p>
+
+    <h2>Lançamentos do período</h2>
+    <form id="list">
+      <label>De <input name="from" type="date" required></label>
+      <label>Até <input name="to" type="date" required></label>
+      <button type="submit">Listar</button>
+    </form>
+    <p class="feedback" id="list-feedback" role="status"></p>
+    <table id="entries-table">
+      <thead><tr><th scope="col">Data</th><th scope="col">Tipo</th><th scope="col">Valor</th><th scope="col">Descrição</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section id="balance" role="tabpanel" aria-labelledby="tab-balance" hidden>
+    <h2>Saldo consolidado</h2>
+    <form id="balance-query">
+      <label>De <input name="from" type="date" required></label>
+      <label>Até <input name="to" type="date" required></label>
+      <button type="submit">Consultar</button>
+    </form>
+    <p class="feedback" id="balance-feedback" role="status"></p>
+    <table id="balance-table">
+      <thead><tr><th scope="col">Data</th><th scope="col">Créditos</th><th scope="col">Débitos</th><th scope="col">Saldo</th><th scope="col">Lançamentos</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
