@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+<ItemGroup>
+    <ProjectReference Include="../CashFlow.Ledger.Domain/CashFlow.Ledger.Domain.csproj" />
+    <ProjectReference Include="../../CashFlow.Contracts/CashFlow.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
