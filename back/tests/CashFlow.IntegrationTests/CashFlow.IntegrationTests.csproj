@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="Shouldly" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/Ledger/CashFlow.Ledger.Api/CashFlow.Ledger.Api.csproj" />
+    <ProjectReference Include="../../src/Consolidation/CashFlow.Consolidation.Api/CashFlow.Consolidation.Api.csproj" />
+    <ProjectReference Include="../../src/Ledger/CashFlow.Ledger.Infrastructure/CashFlow.Ledger.Infrastructure.csproj" />
+    <ProjectReference Include="../../src/Consolidation/CashFlow.Consolidation.Infrastructure/CashFlow.Consolidation.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
